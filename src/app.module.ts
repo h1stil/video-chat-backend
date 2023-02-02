@@ -6,11 +6,11 @@ import { UsersService } from './modules/users/users.service';
 import { UsersModule } from './modules/users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
-import { User } from './modules/users/user.model';
+import { User } from './modules/users/users.model';
 
 @Module({
-  controllers: [AppController, UsersController],
-  providers: [AppService, UsersService],
+  controllers: [],
+  providers: [],
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
