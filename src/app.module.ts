@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { User } from './modules/users/users.model';
 import { Role } from './modules/roles/roles.model';
 import { UserRoles } from './modules/roles/user-roles.model';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   controllers: [],
@@ -14,6 +15,7 @@ import { UserRoles } from './modules/roles/user-roles.model';
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
     UsersModule,
+    AuthModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: process.env.POSTGRES_HOST,

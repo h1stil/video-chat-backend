@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   async registrate(userDto: CreateUserDto): Promise<string> {
-    const candidate = this.userService.getUserByEmail(userDto.email);
+    const candidate = await this.userService.getUserByEmail(userDto.email);
     if (candidate) {
       throw new HttpException(
         'User with this email already exists',
