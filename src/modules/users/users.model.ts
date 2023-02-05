@@ -10,6 +10,7 @@ import { Role } from '../roles/roles.model';
 import { UserRoles } from '../roles/user-roles.model';
 
 interface UserCreationAttrs {
+  name: string;
   email: string;
   password: string;
 }
@@ -74,7 +75,7 @@ export class User extends Model<User, UserCreationAttrs> {
   @ApiProperty({ example: 'Admin', description: 'Role: Admin or User' })
   @Column({
     type: DataType.STRING,
-    defaultValue: 'User',
+    defaultValue: 'USER',
   })
   role: string;
 

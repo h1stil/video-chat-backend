@@ -4,9 +4,10 @@ import {
   Get,
   Post,
   UseGuards,
-  UsePipes,
+  //  UseInterceptors,
+  // UsePipes,
 } from '@nestjs/common';
-import { CreateUserDto } from './models/user.entity';
+// import { CreateUserDto } from './models/user.entity';
 import { UsersService } from './users.service';
 import { ApiOperation } from '@nestjs/swagger';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
@@ -15,20 +16,23 @@ import { RolesGuard } from '../auth/roles.guards';
 import { Roles } from '../auth/roles-auth.decorator';
 import { RoleDto } from './models/add-role.dto';
 import { BanUserDto } from './models/ban-user.dto';
-import { ValidationPipe } from '../pipes/validation.pipe';
+// import { FileInterceptor } from '@nestjs/platform-express';
+// import { ValidationPipe } from '../pipes/validation.pipe';
 
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @ApiOperation({ summary: 'User creation' })
-  @ApiResponse({ status: 200, type: User })
+  // @ApiOperation({ summary: 'User creation' })
+  // @ApiResponse({ status: 200, type: User })
   // @UsePipes(ValidationPipe)
-  @Post()
-  create(@Body() userDto: CreateUserDto) {
-    return this.usersService.createUser(userDto);
-  }
+  // @Post()
+  // // @UseInterceptors(FileInterceptor('avatar'))
+  // create(@Body() userDto: CreateUserDto) {
+  //   console.log(userDto, 'userDto');
+  //   return this.usersService.createUser(userDto);
+  // }
 
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({ status: 200, type: [User] })
@@ -52,7 +56,7 @@ export class UsersController {
   @ApiResponse({ status: 200, type: User })
   @Roles('ADMIN')
   @UseGuards(RolesGuard)
-  @Post('/bun')
+  @Post('/ban')
   bunUser(@Body() banDto: BanUserDto) {
     return this.usersService.banUser(banDto);
   }

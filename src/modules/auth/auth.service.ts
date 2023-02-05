@@ -47,13 +47,13 @@ export class AuthService {
     const user = await this.userService.getUserByEmail(userDto.email);
     console.log(user, 'user');
     console.log(userDto, 'dto');
-    console.log(userDto.password, 'dto', user.password);
-    const passwordEquals = await bcrypt.compare(
-      userDto.password,
-      user.password,
-    );
-    console.log(passwordEquals, 'passwordEquals');
-    if (user && passwordEquals) return user;
+    if (user) {
+      const passwordEquals = await bcrypt.compare(
+        userDto.password,
+        user.password,
+      );
+      if (passwordEquals) return user;
+    }
     throw new UnauthorizedException({ message: 'Wrong email or password' });
   }
 }

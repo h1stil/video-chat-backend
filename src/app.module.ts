@@ -6,6 +6,8 @@ import { User } from './modules/users/users.model';
 import { Role } from './modules/roles/roles.model';
 import { UserRoles } from './modules/roles/user-roles.model';
 import { AuthModule } from './modules/auth/auth.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { resolve } from 'path';
 
 @Module({
   controllers: [],
@@ -13,6 +15,9 @@ import { AuthModule } from './modules/auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: resolve(__dirname, 'static'),
     }),
     UsersModule,
     AuthModule,

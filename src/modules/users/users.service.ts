@@ -11,12 +11,16 @@ import { HttpStatus } from '@nestjs/common/enums';
 export class UsersService {
   constructor(
     @InjectModel(User) private userRepository: typeof User,
-    private roleServise: RolesService,
+    private roleServise: RolesService, //  private fileService: FileService,
   ) {}
 
   async createUser(userDto: CreateUserDto): Promise<User> {
+    // TODO file avatar upload
+    // const fileName = await this.fileService.createFile(image);
+    console.log(userDto, 'userDto');
     const user = await this.userRepository.create(userDto);
     const role = await this.roleServise.getRoleByValue('USER');
+    console.log(role, 'role');
     await user.$set('roles', [role.id]);
     user.roles = [role];
     return user;
