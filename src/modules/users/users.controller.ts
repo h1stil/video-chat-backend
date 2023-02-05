@@ -19,7 +19,7 @@ import { BanUserDto } from './models/ban-user.dto';
 // import { FileInterceptor } from '@nestjs/platform-express';
 // import { ValidationPipe } from '../pipes/validation.pipe';
 
-@ApiTags('Users')
+@ApiTags('Users (only for ADMIN)')
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
