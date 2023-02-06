@@ -30,7 +30,6 @@ export class UsersController {
   // @Post()
   // // @UseInterceptors(FileInterceptor('avatar'))
   // create(@Body() userDto: CreateUserDto) {
-  //   console.log(userDto, 'userDto');
   //   return this.usersService.createUser(userDto);
   // }
 

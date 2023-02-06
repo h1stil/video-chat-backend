@@ -17,10 +17,8 @@ export class UsersService {
   async createUser(userDto: CreateUserDto): Promise<User> {
     // TODO file avatar upload
     // const fileName = await this.fileService.createFile(image);
-    console.log(userDto, 'userDto');
     const user = await this.userRepository.create(userDto);
     const role = await this.roleServise.getRoleByValue('USER');
-    console.log(role, 'role');
     await user.$set('roles', [role.id]);
     user.roles = [role];
     return user;
