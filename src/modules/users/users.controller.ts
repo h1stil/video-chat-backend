@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UseGuards,
-  //  UseInterceptors,
-  // UsePipes,
-} from '@nestjs/common';
-// import { CreateUserDto } from './models/user.entity';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiOperation } from '@nestjs/swagger';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
@@ -16,22 +7,11 @@ import { RolesGuard } from '../auth/roles.guards';
 import { Roles } from '../auth/roles-auth.decorator';
 import { RoleDto } from './models/add-role.dto';
 import { BanUserDto } from './models/ban-user.dto';
-// import { FileInterceptor } from '@nestjs/platform-express';
-// import { ValidationPipe } from '../pipes/validation.pipe';
 
 @ApiTags('Users (only for ADMIN)')
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
-
-  // @ApiOperation({ summary: 'User creation' })
-  // @ApiResponse({ status: 200, type: User })
-  // @UsePipes(ValidationPipe)
-  // @Post()
-  // // @UseInterceptors(FileInterceptor('avatar'))
-  // create(@Body() userDto: CreateUserDto) {
-  //   return this.usersService.createUser(userDto);
-  // }
 
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({ status: 200, type: [User] })
@@ -40,6 +20,15 @@ export class UsersController {
   @Get()
   getAll() {
     return this.usersService.getAllUsers();
+  }
+
+  @ApiOperation({ summary: 'Get a user by email' })
+  @ApiResponse({ status: 200, type: [User] })
+  @Roles('ADMIN', 'USER')
+  @UseGuards(RolesGuard)
+  @Get('/:email')
+  getUserById(@Param() params): Promise<User> {
+    return this.usersService.getUserByEmail(params.email);
   }
 
   @ApiOperation({ summary: 'Provide a role' })
