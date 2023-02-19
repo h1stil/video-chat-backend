@@ -8,6 +8,7 @@ import {
 } from 'sequelize-typescript';
 import { Role } from '../roles/roles.model';
 import { UserRoles } from '../roles/user-roles.model';
+import { Exclude } from 'class-transformer';
 
 interface UserCreationAttrs {
   name: string;
