@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
-import { CreateUserDto } from '../users/models/user.entity';
+import { CreateUserDto, LoginUserDto } from '../users/models/user.entity';
 import { AuthService } from './auth.service';
 import { ApiOperation } from '@nestjs/swagger';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
@@ -19,7 +19,7 @@ export class AuthController {
   })
   @UsePipes(ValidationPipe)
   @Post('/login')
-  login(@Body() userDto: CreateUserDto) {
+  login(@Body() userDto: LoginUserDto) {
     return this.authService.login(userDto);
   }
 

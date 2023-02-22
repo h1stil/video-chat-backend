@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../users/models/user.entity';
+import { CreateUserDto, LoginUserDto } from '../users/models/user.entity';
 import { User } from '../users/users.model';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
@@ -17,8 +17,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(userDto: CreateUserDto): Promise<string> {
-    const user = await this.validateUser(userDto);
+  async login(userDto: LoginUserDto): Promise<string> {
+    const user = await this.validateLoginUser(userDto);
     return this.generateToken(user);
   }
 
@@ -49,6 +49,18 @@ export class AuthService {
   }
 
   private async validateUser(userDto: CreateUserDto) {
+    const user = await this.userService.getUserByEmail(userDto.email);
+    if (user) {
+      const passwordEquals = await bcrypt.compare(
+        userDto.password,
+        user.password,
+      );
+      if (passwordEquals) return user;
+    }
+    throw new UnauthorizedException({ message: 'Wrong email or password' });
+  }
+
+  private async validateLoginUser(userDto: LoginUserDto) {
     const user = await this.userService.getUserByEmail(userDto.email);
     if (user) {
       const passwordEquals = await bcrypt.compare(
