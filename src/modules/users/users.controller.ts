@@ -24,8 +24,8 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Get a user by email' })
   @ApiResponse({ status: 200, type: [User] })
-  @Roles('ADMIN', 'USER')
-  @UseGuards(RolesGuard)
+  // @Roles('ADMIN', 'USER')
+  // @UseGuards(RolesGuard)
   @Get('/:email')
   getUserById(@Param() params): Promise<User> {
     return this.usersService.getUserByEmail(params.email);
